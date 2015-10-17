@@ -1,0 +1,8 @@
+prefix=/home/guillaume/roscode/catkin_ws/src/optitrack_rviz/build/devel
+
+Name: optitrack_rviz
+Description: Description of optitrack_rviz
+Version: 0.0.0
+Cflags: -I/home/guillaume/roscode/catkin_ws/src/optitrack_rviz/include -I/home/guillaume/CppWorkSpace/kalman_filter/include
+Libs: -L/home/guillaume/roscode/catkin_ws/src/optitrack_rviz/build/devel/lib -loptitrack_rviz
+Requires: roscpp tf sensor_msgs roscpp tf sensor_msgs

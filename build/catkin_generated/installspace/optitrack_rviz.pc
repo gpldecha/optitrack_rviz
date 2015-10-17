@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: optitrack_rviz
+Description: Description of optitrack_rviz
+Version: 0.0.0
+Cflags: -I/usr/local/include -I/home/guillaume/CppWorkSpace/kalman_filter/include
+Libs: -L/usr/local/lib -loptitrack_rviz
+Requires: roscpp tf sensor_msgs roscpp tf sensor_msgs
