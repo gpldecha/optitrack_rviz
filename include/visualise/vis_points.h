@@ -15,6 +15,8 @@ namespace opti_rviz{
 
 class Vis_points{
 
+public:
+
     typedef std::vector<std::array<float,3> > colors;
 
 public:

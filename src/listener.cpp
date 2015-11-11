@@ -54,6 +54,27 @@ void Listener::update(tf::Vector3& origin,tf::Matrix3x3& orientation){
     q_tmp       = q;
 }
 
+void Listener::update(tf::Vector3& origin,tf::Quaternion& orientation){
+    try{
+        tf_listener.lookupTransform(fixed_frame,target_frame, ros::Time(0), tf_transform);
+        origin      = tf_transform.getOrigin();
+        orientation = tf_transform.getRotation();
+    }
+    catch (tf::TransformException ex){
+        ROS_WARN("%s",ex.what());
+        ros::Duration(0.2).sleep();
+        q      = q_tmp;
+        origin = origin_tmp;
+    }
+
+    origin_tmp = origin;
+    q_tmp       = q;
+}
+
+void get_tf_once(const std::string& fixed_frame, const std::string& target_frame,tf::Transform& transform){
+
+}
+
 
 void Listener::optitrack_to_rviz(tf::Quaternion& q) {
 
@@ -76,6 +97,36 @@ void Listener::optitrack_to_rviz(tf::Quaternion& q) {
     tmp2.getRotation(q);
 }
 
+
+void Listener::get_tf_once(const std::string& fixed_frame, const std::string& target_frame,tf::StampedTransform& transform,std::size_t rate_hz){
+
+    ros::Rate rate(rate_hz);
+    tf::TransformListener listener;
+    bool bset = false;
+    while(bset != true){
+        try{
+
+            listener.lookupTransform(fixed_frame,target_frame, ros::Time(0), transform);
+            bset = true;
+
+        }catch (tf::TransformException ex){
+            ROS_WARN("%s",ex.what());
+            ros::Duration(1.0).sleep();
+
+        }
+        ros::spinOnce();
+        rate.sleep();
+    }
+}
+
+void Listener::print(const tf::StampedTransform& transfrom){
+    std::cout<< "tf origin: " << transfrom.getOrigin().x() << " " << transfrom.getOrigin().y() << " " << transfrom.getOrigin().z() << std::endl;
+    std::cout<< "tf orient: " << transfrom.getRotation().getW() << " "
+             <<  transfrom.getRotation().getX() << " "
+              <<  transfrom.getRotation().getY() << " "
+               <<  transfrom.getRotation().getZ() << std::endl;
+
+}
 
 
 }

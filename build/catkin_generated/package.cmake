@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "optitrack_rviz")
-set(optitrack_rviz_MAINTAINER "guillaume <guillaume@todo.todo>")
-set(optitrack_rviz_DEPRECATED "")
-set(optitrack_rviz_VERSION "0.0.0")
-set(optitrack_rviz_BUILD_DEPENDS "roscpp" "tf" "message_runtime" "std_msgs" "sensor_msgs")
-set(optitrack_rviz_RUN_DEPENDS "roscpp" "tf" "message_runtime" "std_msgs" "sensor_msgs")
-set(optitrack_rviz_BUILDTOOL_DEPENDS "catkin")

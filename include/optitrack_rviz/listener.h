@@ -29,6 +29,13 @@ public:
 
     void update(tf::Vector3& origin,tf::Matrix3x3& orientation);
 
+    void update(tf::Vector3& origin,tf::Quaternion& orientation);
+
+
+    static void get_tf_once(const std::string& fixed_frame, const std::string& target_frame,tf::StampedTransform& transform,std::size_t rate_hz=1);
+
+    static void print(const tf::StampedTransform& transfrom);
+
 private:
 
     void optitrack_to_rviz(tf::Quaternion& q);
@@ -44,6 +51,8 @@ private:
     bool                    bFirst;
 
 };
+
+
 
 }
 
