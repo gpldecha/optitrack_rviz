@@ -105,8 +105,6 @@ CMakeFiles/optitrack_rviz.dir/src/colormap.cpp.o
  /home/guillaume/roscode/catkin_ws/src/optitrack_rviz/src/colormap.cpp
 CMakeFiles/optitrack_rviz.dir/src/filter.cpp.o
  ../include/optitrack_rviz/filter.h
- /home/guillaume/CppWorkSpace/kalman_filter/include/joint_state_estimator.h
- /home/guillaume/CppWorkSpace/kalman_filter/include/kalmanfilter.h
  /home/guillaume/roscode/catkin_ws/src/optitrack_rviz/src/filter.cpp
  /opt/ros/indigo/include/XmlRpcDecl.h
  /opt/ros/indigo/include/XmlRpcValue.h

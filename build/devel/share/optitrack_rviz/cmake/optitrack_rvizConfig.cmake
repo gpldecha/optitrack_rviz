@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(optitrack_rviz_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/guillaume/roscode/catkin_ws/src/optitrack_rviz/include;/home/guillaume/CppWorkSpace/kalman_filter/include " STREQUAL " ")
+if(NOT "/home/guillaume/roscode/catkin_ws/src/optitrack_rviz/include " STREQUAL " ")
   set(optitrack_rviz_INCLUDE_DIRS "")
-  set(_include_dirs "/home/guillaume/roscode/catkin_ws/src/optitrack_rviz/include;/home/guillaume/CppWorkSpace/kalman_filter/include")
+  set(_include_dirs "/home/guillaume/roscode/catkin_ws/src/optitrack_rviz/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})

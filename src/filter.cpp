@@ -5,24 +5,24 @@ namespace opti_rviz{
 
 /// Kalman filter
 
-Kalman::Kalman(float dt,float process_noise,float measurement_noise):
-    dt(dt),kalman_filter(3,process_noise,measurement_noise)
+Kalman::Kalman(float dt,float process_noise,float measurement_noise){
+ /*   dt(dt),kalman_filter(3,process_noise,measurement_noise)
 {
     k_position.resize(3);
-    k_measurement.resize(3);
+    k_measurement.resize(3);*/
 }
 
 void Kalman::init(tf::Vector3 &origin){
-    k_position(0) = origin.x();k_position(1) = origin.y(); k_position(2) = origin.z();
+ //   k_position(0) = origin.x();k_position(1) = origin.y(); k_position(2) = origin.z();
 
-    kalman_filter.Init(k_position);
+  //  kalman_filter.Init(k_position);
 }
 
 void Kalman::update(tf::Vector3 &position_measurement){
-    k_measurement(0) = position_measurement.x();k_measurement(1) = position_measurement.y(); k_measurement(2) = position_measurement.z();
-    kalman_filter.Update(k_measurement,dt);
-    kalman_filter.GetPosition(k_position);
-    position_measurement.setValue(k_position(0),k_position(1),k_position(2));
+ //   k_measurement(0) = position_measurement.x();k_measurement(1) = position_measurement.y(); k_measurement(2) = position_measurement.z();
+ //   kalman_filter.Update(k_measurement,dt);
+ //   kalman_filter.GetPosition(k_position);
+ //   position_measurement.setValue(k_position(0),k_position(1),k_position(2));
 }
 
 /// Jump filter

@@ -8,7 +8,7 @@
 
 
 
-#include <joint_state_estimator.h>
+//#include <joint_state_estimator.h>
 
 #include <boost/circular_buffer.hpp>
 
@@ -27,8 +27,8 @@ public:
 
 private:
 
-    kkf::JointStateEstimator<float>                     kalman_filter;
-    kkf::TVec<float>                                    k_measurement,k_position;
+  //  kkf::JointStateEstimator<float>                     kalman_filter;
+  //  kkf::TVec<float>                                    k_measurement,k_position;
     float                                               dt;
 
 };

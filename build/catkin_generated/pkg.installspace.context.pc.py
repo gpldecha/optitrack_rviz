@@ -1,6 +1,6 @@
 # generated from catkin/cmake/template/pkg.context.pc.in
 CATKIN_PACKAGE_PREFIX = ""
-PROJECT_PKG_CONFIG_INCLUDE_DIRS = "/usr/local/include;/home/guillaume/CppWorkSpace/kalman_filter/include".split(';') if "/usr/local/include;/home/guillaume/CppWorkSpace/kalman_filter/include" != "" else []
+PROJECT_PKG_CONFIG_INCLUDE_DIRS = "/usr/local/include".split(';') if "/usr/local/include" != "" else []
 PROJECT_CATKIN_DEPENDS = "roscpp;tf;sensor_msgs;roscpp;tf;sensor_msgs".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "-loptitrack_rviz".split(';') if "-loptitrack_rviz" != "" else []
 PROJECT_NAME = "optitrack_rviz"
