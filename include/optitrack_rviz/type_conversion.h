@@ -4,6 +4,7 @@
 #include <armadillo>
 #include <tf/LinearMath/Matrix3x3.h>
 #include <tf/LinearMath/Vector3.h>
+#include <tf/LinearMath/Transform.h>
 
 namespace opti_rviz {
 
@@ -71,7 +72,6 @@ public:
     }
 
 
-
     static void tf2vec(const tf::Vector3& v1, arma::colvec3& v2){
             v2(0) = v1.x();
             v2(1) = v1.y();
@@ -84,12 +84,26 @@ public:
             v2(2) = v1.z();
     }
 
+    static void tf2vec4(const tf::Quaternion& q1, arma::colvec4& q2){
+        q2(0) = q1.getX();
+        q2(1) = q1.getY();
+        q2(2) = q1.getZ();
+        q2(3) = q1.getW();
+
+    }
+
+    static void setTransform(tf::Transform& trans, const arma::colvec3& origin, const arma::colvec4& orientation){
+            trans.setOrigin(tf::Vector3(origin(0),origin(1),origin(2)));
+            trans.setRotation(tf::Quaternion(orientation(0),orientation(1),orientation(2),orientation(3)));
+    }
+
 
     static void vec2tf(const arma::colvec3& v1, tf::Vector3& v2){
         v2.setX(v1(0));
         v2.setY(v1(1));
         v2.setZ(v1(2));
     }
+
 
     static void vec2tf(const arma::fcolvec3& v1, tf::Vector3& v2){
         v2.setX(v1(0));
