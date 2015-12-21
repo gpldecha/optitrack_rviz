@@ -36,10 +36,10 @@ void Vis_vectors::initialise(const std::string& frame_id,const std::vector<Arrow
             marker.color.g         = g;
             marker.color.b         = b;
         }
-
-        marker.scale.x         = scale;
-        marker.scale.y         = scale;
-        marker.scale.z         = scale;
+        marker.lifetime        = ros::Duration(1);
+        marker.scale.x         = vectors[i].shaft_diameter;
+        marker.scale.y         = vectors[i].head_diameter;
+        marker.scale.z         = vectors[i].head_length;
         marker.points.resize(2);
         vector_marke_array.markers[i] = marker;
     }

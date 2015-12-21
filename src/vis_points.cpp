@@ -28,6 +28,7 @@ void Vis_points::initialise_markers(const std::string& frame_id, const std::size
     point_m.color.r         = r;
     point_m.color.g         = g;
     point_m.color.b         = b;
+    point_m.lifetime        = ros::Duration(1);
 
     point_m.action          = visualization_msgs::Marker::ADD;
     point_m.header.stamp    = ros::Time::now();
@@ -59,7 +60,6 @@ void Vis_points::initialise(const std::string& frame_id, const arma::fmat& point
           point_m.points[i].z    = points(i,2);
     }
 }
-
 
 
 void Vis_points::update(const std::vector<tf::Vector3>& points){

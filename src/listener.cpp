@@ -98,25 +98,20 @@ void Listener::optitrack_to_rviz(tf::Quaternion& q) {
 }
 
 
-void Listener::get_tf_once(const std::string& fixed_frame, const std::string& target_frame,tf::StampedTransform& transform,std::size_t rate_hz){
+void Listener::get_tf_once(const std::string& target_frame, const std::string& source_frame, tf::StampedTransform& transform){
 
-    ros::Rate rate(rate_hz);
     tf::TransformListener listener;
     bool bset = false;
     while(bset != true){
         try{
-
-            listener.lookupTransform(fixed_frame,target_frame, ros::Time(0), transform);
+            listener.waitForTransform(target_frame, source_frame, ros::Time(0), ros::Duration(2.0));
+            listener.lookupTransform(target_frame,source_frame, ros::Time(0), transform);
             bset = true;
-
         }catch (tf::TransformException ex){
-            ROS_WARN("%s",ex.what());
-            ros::Duration(1.0).sleep();
-
+            ROS_WARN_THROTTLE(1,"%s",ex.what());
         }
-        ros::spinOnce();
-        rate.sleep();
     }
+
 }
 
 void Listener::print(const tf::StampedTransform& transfrom){

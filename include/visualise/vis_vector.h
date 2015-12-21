@@ -18,6 +18,9 @@ public:
     Arrow(const tf::Vector3& origin,const tf::Vector3& direction):origin(origin),direction(direction){}
     tf::Vector3 origin;
     tf::Vector3 direction;
+    double shaft_diameter;
+    double head_diameter;
+    double head_length;
 };
 
 class Vis_vectors{

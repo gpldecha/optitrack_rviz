@@ -8,8 +8,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp tf sensor_msgs
 )
 
-#set(KALMAN_INCLUDE /home/guillaume/CppWorkSpace/kalman_filter/include)
-
 find_package(Armadillo)
 
 
@@ -146,7 +144,6 @@ include_directories(
   ${INCLUDE_DIR}
   ${VIS_HEADER_FILES}
  ${INCLUDE_DIR}/visualise
-  ${KALMAN_INCLUDE}
 )
 
 

@@ -32,7 +32,9 @@ public:
     void update(tf::Vector3& origin,tf::Quaternion& orientation);
 
 
-    static void get_tf_once(const std::string& fixed_frame, const std::string& target_frame,tf::StampedTransform& transform,std::size_t rate_hz=1);
+    static void get_tf_once(const std::string& fixed_frame,
+                            const std::string& target_frame,
+                            tf::StampedTransform& transform);
 
     static void print(const tf::StampedTransform& transfrom);
 
