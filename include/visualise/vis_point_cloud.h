@@ -23,6 +23,8 @@ public:
 
     void set_display_type(display_mode type);
 
+    void update(const arma::mat &points, const colors &colors, const double* weights, double threashod=0.9);
+
     void update(const arma::mat& points,const colors& colors,const arma::colvec& weights, double threashod=0.9);
 
     void publish();
@@ -32,16 +34,7 @@ private:
 
     sensor_msgs::PointCloud              mPointCloud;
     ros::Publisher                       cloud_pub;
-    display_mode                             vtype;
-
-
-/*
-    visualization_msgs::Marker             mCloudPoints;
-    ros::Publisher                         point_cloud_publisher;
-    avec3                                  tmp;
-    std::size_t i;
-    std::size_t ID;*/
-
+    display_mode                         vtype;
 
 };
 

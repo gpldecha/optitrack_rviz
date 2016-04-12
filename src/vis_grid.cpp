@@ -30,6 +30,7 @@ void Vis_gird::initialise(const std::string& frame_id, const arma::mat& points,i
         marker.points[0].x      = points(i,0);
         marker.points[0].y      = points(i,1);
         marker.points[0].z      = points(i,2);
+        marker.lifetime         = ros::Duration(1);
         marker.color.r          = r;
         marker.color.g          = g;
         marker.color.b          = b;

@@ -3,62 +3,89 @@
 namespace opti_rviz{
 
 
-Vis_cylinder::Vis_cylinder(ros::NodeHandle& node, const std::string&  topic_name, int  marker_display_type){
-
-    cylinder_pub     = node.advertise<visualization_msgs::Marker>(topic_name, 10);
-    cylinder_m.type  = marker_display_type;
-
-    scale = 0.2;
-    r     = 1;
-    g     = 0;
-    b     = 0;
-    alpha = 0.2;
-
+Cylinder::Cylinder(){
+    position.x = 0; position.y = 0; position.z = 0;
+    orientation.w = 1; orientation.x = 0;  orientation.y = 0; orientation.z = 0;
+    set_rgba(1,0,0,1);
+    set_scale(0.1,0.1,0.1);
 }
 
-void Vis_cylinder::initialise(const std::string& frame_id){
-
-    cylinder_m.header.frame_id = frame_id;
-    cylinder_m.scale.x         = scale;
-    cylinder_m.scale.y         = scale;
-    cylinder_m.scale.z         = 1;
-    cylinder_m.color.a         = alpha;
-    cylinder_m.color.r         = r;
-    cylinder_m.color.g         = g;
-    cylinder_m.color.b         = b;
-
-    cylinder_m.pose.position.x = 0;
-    cylinder_m.pose.position.y = 0;
-    cylinder_m.pose.position.z = 0;
-
-    cylinder_m.pose.orientation.x = 0;
-    cylinder_m.pose.orientation.y = 0;
-    cylinder_m.pose.orientation.z = 0;
-    cylinder_m.pose.orientation.w = 1;
-
-    cylinder_m.action          = visualization_msgs::Marker::ADD;
-    cylinder_m.header.stamp    = ros::Time::now();
-    cylinder_m.id              = 0;
-    cylinder_m.frame_locked    = false;
-
+Cylinder::Cylinder(const tf::Vector3& position,const tf::Quaternion orientation)
+{
+    set_scale(0.1,0.1,0.1);
+    set_pos(position,orientation);
+    set_rgba(1,0,0,1);
 }
 
-void Vis_cylinder::update(const tf::Vector3& position,const tf::Quaternion& orientation){
-    cylinder_m.pose.position.x    = position.x();
-    cylinder_m.pose.position.y    = position.y();
-    cylinder_m.pose.position.z    = position.z();
-
-    cylinder_m.pose.orientation.x = orientation.x();
-    cylinder_m.pose.orientation.y = orientation.y();
-    cylinder_m.pose.orientation.z = orientation.z();
-    cylinder_m.pose.orientation.w = orientation.w();
+void Cylinder::set_pos(const tf::Vector3& position,const tf::Quaternion orientation){
+    tf_pos    = position;
+    tf_orient = orientation;
+    this->position.x    = position.getX();
+    this->position.y    = position.getY();
+    this->position.z    = position.getZ();
+    this->orientation.w = orientation.getW();
+    this->orientation.x = orientation.getX();
+    this->orientation.y = orientation.getY();
+    this->orientation.z = orientation.getZ();
 }
 
+void Cylinder::set_FR_tip(){
+    tf_rot.setRotation(tf_orient);
+    tf_pos_shift = (tf_rot * (tf_scale/2.0)) + tf_pos;
+    position.x = tf_pos_shift.getX();
+    position.y = tf_pos_shift.getY();
+    position.z = tf_pos_shift.getZ();
+}
 
+void Cylinder::set_rgba(double r, double g, double b, double a){
+    color.a = a; color.r = r; color.g = g; color.b = b;
+}
+
+void Cylinder::set_scale(double x, double y, double z){
+    scale.x = x; scale.y = y; scale.z = z;
+    tf_scale.setX(0);
+    tf_scale.setY(0);
+    tf_scale.setZ(scale.z);
+}
+
+Vis_cylinder::Vis_cylinder(ros::NodeHandle& node, const std::string&  topic_name){
+    publisher     = node.advertise<visualization_msgs::MarkerArray>(topic_name, 10);
+}
+
+void Vis_cylinder::initialise(const std::string& frame_id,const std::vector<Cylinder>& cylinders){
+
+    marker_array.markers.resize(cylinders.size());
+    for(std::size_t i = 0; i < cylinders.size();i++){
+        visualization_msgs::Marker marker;
+        marker.header.frame_id      = frame_id;
+        marker.scale                = cylinders[i].scale;
+        marker.pose.position        = cylinders[i].position;
+        marker.pose.orientation     = cylinders[i].orientation;
+        marker.color                = cylinders[i].color;
+        marker.lifetime             = ros::Duration(1);
+        marker.type                 = visualization_msgs::Marker::CYLINDER;
+        marker.header.stamp         = ros::Time::now();
+        marker.id                   = i;
+        marker.frame_locked         = false;
+        marker_array.markers[i]     = marker;
+    }
+}
+
+void Vis_cylinder::update(const std::vector<Cylinder> &cylinders){
+
+    for(std::size_t i = 0; i < cylinders.size();i++){
+        marker_array.markers[i].scale                = cylinders[i].scale;
+        marker_array.markers[i].pose.position        = cylinders[i].position;
+        marker_array.markers[i].pose.orientation     = cylinders[i].orientation;
+        marker_array.markers[i].color                = cylinders[i].color;
+        marker_array.markers[i].header.stamp         = ros::Time::now();
+
+    }
+    publisher.publish(marker_array);
+}
 
 void Vis_cylinder::publish(){
-    cylinder_m.header.stamp    = ros::Time::now();
-    cylinder_pub.publish(cylinder_m);
+    publisher.publish(marker_array);
 }
 
 }

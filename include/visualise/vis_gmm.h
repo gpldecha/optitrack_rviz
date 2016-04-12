@@ -20,13 +20,19 @@ public:
                      const std::vector<arma::vec>& means,
                      const std::vector<arma::mat>& covariances);
 
+     void initialise(const std::string& frame_id,
+                     const arma::vec& mean,
+                     const arma::mat& covariance);
+
      void update(const arma::vec& weights,const std::vector<arma::vec>& means, const std::vector<arma::mat>& covariances);
+
+     void update(const arma::vec& mean, const arma::mat& covariance);
 
      void publish();
 
 public:
 
-     float r,g,b;
+     float r,g,b,a;
 
 private:
 

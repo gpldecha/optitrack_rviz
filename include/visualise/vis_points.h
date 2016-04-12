@@ -26,6 +26,7 @@ public:
     void initialise(const std::string& frame_id, const std::vector<tf::Vector3>& points);
     void initialise(const std::string& frame_id, const arma::fmat& points);
 
+
     void update(const std::vector<tf::Vector3>& points);
     void update(const arma::fmat &points, const colors& colors = colors(0));
 

@@ -29,8 +29,7 @@ void Vis_points::initialise_markers(const std::string& frame_id, const std::size
     point_m.color.g         = g;
     point_m.color.b         = b;
     point_m.lifetime        = ros::Duration(1);
-
-    point_m.action          = visualization_msgs::Marker::ADD;
+    //point_m.action          = visualization_msgs::Marker::ADD;
     point_m.header.stamp    = ros::Time::now();
     point_m.id              = 0;
 

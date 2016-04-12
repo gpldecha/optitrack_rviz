@@ -2,50 +2,71 @@
 
 namespace opti_rviz{
 
-Vis_vectors::Vis_vectors(ros::NodeHandle& node,const std::string& topic_name){
+Arrow::Arrow(){}
 
-    vector_pub  = node.advertise<visualization_msgs::MarkerArray>(topic_name, 10);
-
-    scale = 1;
-    r     = 1;
-    g     = 0;
-    b     = 0;
+Arrow::Arrow(const tf::Vector3& origin,const tf::Vector3& direction, const std::string& name):
+    origin(origin),
+    direction(direction),
+    name(name)
+{
+    scale.x = 0.01;
+    scale.y = 0.015;
+    scale.z = 0.015;
 }
 
-void Vis_vectors::set_color(const std::vector<tf::Vector3>& colors){
-    this->colors = colors;
+void Arrow::set_pos_dir(const tf::Vector3& origin,const tf::Vector3& direction){
+    this->origin    = origin;
+    this->direction = direction;
+}
+
+void Arrow::set_rgba(double r, double g, double b, double a){
+    color.a = a;color.r = r; color.g = g; color.b = b;
+}
+
+void Arrow::set_scale(double shaft_diameter, double head_diameter, double head_length){
+    scale.x = shaft_diameter;
+    scale.y = head_diameter;
+    scale.z = head_length;
+}
+
+void Arrow::print()const {
+    std::cout<< "== Arrow ==" << std::endl;
+    std::cout<< "origin: " << origin.getX() << " " << origin.getY() << " " << origin.getZ() << std::endl;
+    std::cout<< "direction: " << direction.getX() << " " << direction.getY() << " " << direction.getZ() << std::endl;
+    std::cout<< "name: " << name << std::endl;
+}
+
+Vis_vectors::Vis_vectors(ros::NodeHandle& node,const std::string& topic_name)
+    :topic_name(topic_name)
+{
+    vector_pub      = node.advertise<visualization_msgs::MarkerArray>(topic_name, 10);
+    bInitialised    = false;
 }
 
 void Vis_vectors::initialise(const std::string& frame_id,const std::vector<Arrow>& vectors){
     vector_marke_array.markers.resize(vectors.size());
-
-
-
     for(std::size_t i = 0; i < vectors.size();i++){
         visualization_msgs::Marker marker;
         marker.header.frame_id = frame_id;
         marker.type            = visualization_msgs::Marker::ARROW;
-        marker.color.a         = 1.0f;
-
-        if(colors.size() == vectors.size()){
-            marker.color.r         = colors[i][0];
-            marker.color.g         = colors[i][1];
-            marker.color.b         = colors[i][2];
-        }else{
-            marker.color.r         = r;
-            marker.color.g         = g;
-            marker.color.b         = b;
-        }
+        marker.color           = vectors[i].color;
+        marker.scale           = vectors[i].scale;
         marker.lifetime        = ros::Duration(1);
-        marker.scale.x         = vectors[i].shaft_diameter;
-        marker.scale.y         = vectors[i].head_diameter;
-        marker.scale.z         = vectors[i].head_length;
+        marker.id              = i;
         marker.points.resize(2);
         vector_marke_array.markers[i] = marker;
     }
+    bInitialised = true;
 }
 
 void Vis_vectors::update(const std::vector<Arrow>& vectors){
+
+    if(!bInitialised){
+        ROS_WARN_STREAM_THROTTLE(1.0,"Did not intialise: " << topic_name << " vis_vector object!");
+        return;
+    }
+
+    assert(vectors.size() == vector_marke_array.markers.size());
 
     for(std::size_t i = 0; i < vectors.size();i++){
 

@@ -3,10 +3,12 @@
 
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
+#include <visualization_msgs/MarkerArray.h>
 
 #include <vector>
 #include <tf/LinearMath/Vector3.h>
 #include <tf/LinearMath/Quaternion.h>
+#include <tf/LinearMath/Matrix3x3.h>
 
 #include <armadillo>
 #include <array>
@@ -14,37 +16,51 @@
 
 namespace opti_rviz{
 
-class Vis_cylinder{
-
-    typedef std::vector<std::array<float,3> > colors;
+class Cylinder{
 
 public:
 
-    Vis_cylinder(ros::NodeHandle& node, const std::string& topic_name, int marker_display_type=visualization_msgs::Marker::CYLINDER);
+    Cylinder();
 
-    void initialise(const std::string& frame_id);
+    Cylinder(const tf::Vector3 &position, const tf::Quaternion orientation);
 
-    void update(const tf::Vector3& position,const tf::Quaternion& orientation);
+    void set_pos(const tf::Vector3& position,const tf::Quaternion orientation);
+
+    void set_FR_tip();
+
+    void set_rgba(double r, double g, double b, double a);
+
+    void set_scale(double x, double y, double z);
+
+public:
+
+    tf::Vector3                 tf_pos,tf_pos_shift,tf_scale;
+    tf::Quaternion              tf_orient;
+    tf::Matrix3x3               tf_rot;
+    geometry_msgs::Point        position;
+    geometry_msgs::Quaternion   orientation;
+    geometry_msgs::Vector3      scale;
+    std_msgs::ColorRGBA         color;
+
+};
+
+class Vis_cylinder{
+
+public:
+
+    Vis_cylinder(ros::NodeHandle& node, const std::string& topic_name);
+
+    void initialise(const std::string& frame_id,const std::vector<Cylinder>& cylinders);
+
+    void update(const std::vector<Cylinder>& cylinders);
 
     void publish();
 
 private:
 
-    void initialise_markers(const std::string& frame_id, const std::size_t num_points);
 
-public:
-
-    float                      scale;
-    float                      alpha;
-    float                      r;
-    float                      g;
-    float                      b;
-
-private:
-
-
-    ros::Publisher             cylinder_pub;
-    visualization_msgs::Marker cylinder_m;
+    ros::Publisher                  publisher;
+    visualization_msgs::MarkerArray marker_array;
 
 };
 

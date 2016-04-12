@@ -108,7 +108,7 @@ set(HEADER_FILES ${INCLUDE_DIR}/optitrack_rviz/listener.h
                  ${INCLUDE_DIR}/optitrack_rviz/input.h
                  ${INCLUDE_DIR}/optitrack_rviz/load.h
                  ${INCLUDE_DIR}/optitrack_rviz/print.h
-
+                 ${INCLUDE_DIR}/optitrack_rviz/debug.h
 )
 
 set(SRC_FILES  ${SRC_DIR}/listener.cpp
@@ -121,6 +121,7 @@ set(SRC_FILES  ${SRC_DIR}/listener.cpp
 set(VIS_HEADER_FILES ${INCLUDE_DIR}/visualise/vis_points.h
                      ${INCLUDE_DIR}/visualise/vis_vector.h
                      ${INCLUDE_DIR}/visualise/vis_gmm.h
+                     ${INCLUDE_DIR}/visualise/vis_line.h
                      ${INCLUDE_DIR}/visualise/vis_cylinder.h
                      ${INCLUDE_DIR}/visualise/vis_grid.h
                      ${INCLUDE_DIR}/visualise/colormap.h
@@ -133,6 +134,7 @@ set(VIS_SRC_FILES  ${SRC_DIR}/vis_points.cpp
                    ${SRC_DIR}/colormap.cpp
                    ${SRC_DIR}/vis_cylinder.cpp
                    ${SRC_DIR}/vis_grid.cpp
+                   ${SRC_DIR}/vis_line.cpp
                    ${SRC_DIR}/vis_point_cloud.cpp
 
 )

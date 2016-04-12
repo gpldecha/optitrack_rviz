@@ -29,11 +29,15 @@ void Vis_point_cloud::initialise(const std::string& frame_id, const arma::mat& p
 
 }
 
+void Vis_point_cloud::update(const arma::mat &points, const colors &colors, const double* weights, double threashod){
 
-void Vis_point_cloud::update(const arma::mat &points, const colors &colors, const arma::colvec& weights, double threashod){
+    mPointCloud.header.stamp        =   ros::Time::now();
 
     if(vtype == DEFAULT){
+       // ROS_INFO_STREAM_THROTTLE(1.0,"DEFAULT  mPointCloud.points.size(): " <<  mPointCloud.points.size());
+
         for(std::size_t i = 0; i < points.n_rows;i++){
+
             mPointCloud.points[i].x             = points(i,0);
             mPointCloud.points[i].y             = points(i,1);
             mPointCloud.points[i].z             = points(i,2);
@@ -43,14 +47,15 @@ void Vis_point_cloud::update(const arma::mat &points, const colors &colors, cons
 
         }
     }else if(vtype == ONLY_HIGH_WEIGHTS){
+        ROS_INFO_STREAM_THROTTLE(1.0,"only weights");
+
         mPointCloud.points.clear();
         mPointCloud.channels[0].values.clear();
         mPointCloud.channels[1].values.clear();
         mPointCloud.channels[2].values.clear();
         geometry_msgs::Point32 point;
         for(std::size_t i = 0; i < points.n_rows;i++){
-
-            if(weights(i) > threashod){
+            if(weights[i] > threashod){
                 point.x  = points(i,0);
                 point.y  = points(i,1);
                 point.z  = points(i,2);
@@ -59,11 +64,13 @@ void Vis_point_cloud::update(const arma::mat &points, const colors &colors, cons
                 mPointCloud.channels[1].values.push_back(colors[i][1]);
                 mPointCloud.channels[2].values.push_back(colors[i][2]);
             }
-
-
         }
     }
+}
 
+void Vis_point_cloud::update(const arma::mat &points, const colors &colors, const arma::colvec& weights, double threashod){
+
+    update(points,colors,weights.memptr(),threashod);
 
 
 }

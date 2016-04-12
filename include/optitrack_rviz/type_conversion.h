@@ -5,8 +5,20 @@
 #include <tf/LinearMath/Matrix3x3.h>
 #include <tf/LinearMath/Vector3.h>
 #include <tf/LinearMath/Transform.h>
+#include <geometry_msgs/Pose.h>
+#include <cmath>
 
 namespace opti_rviz {
+
+inline double deg2rad(double radian){
+    return radian * M_PI / 180.0;
+}
+
+inline double rad2deg(double degree)
+{
+    return degree * 180.8 / M_PI;
+}
+
 
 class type_conv{
 
@@ -42,7 +54,6 @@ public:
         m2(2,2)    = m1[2][2];
     }
 
-
     static void mat2tf(const arma::mat33& m1, tf::Matrix3x3& m2){
         m2[0][0] = m1(0,0);
         m2[0][1] = m1(0,1);
@@ -71,7 +82,6 @@ public:
         m2[2][2] = m1(2,2);
     }
 
-
     static void tf2vec(const tf::Vector3& v1, arma::colvec3& v2){
             v2(0) = v1.x();
             v2(1) = v1.y();
@@ -97,13 +107,11 @@ public:
             trans.setRotation(tf::Quaternion(orientation(0),orientation(1),orientation(2),orientation(3)));
     }
 
-
     static void vec2tf(const arma::colvec3& v1, tf::Vector3& v2){
         v2.setX(v1(0));
         v2.setY(v1(1));
         v2.setZ(v1(2));
     }
-
 
     static void vec2tf(const arma::fcolvec3& v1, tf::Vector3& v2){
         v2.setX(v1(0));
@@ -111,6 +119,16 @@ public:
         v2.setZ(v1(2));
     }
 
+    static void tf2geom(const tf::Vector3& position,const tf::Quaternion& orientation,geometry_msgs::Pose& pos){
+       pos.position.x = position.getX();
+       pos.position.y = position.getY();
+       pos.position.z = position.getZ();
+
+       pos.orientation.x = orientation.getX();
+       pos.orientation.y = orientation.getY();
+       pos.orientation.z = orientation.getZ();
+       pos.orientation.w = orientation.getW();
+    }
 
 };
 

@@ -38,6 +38,7 @@ void Listener::update_opti2rviz(tf::Vector3& origin,tf::Matrix3x3& orientation){
 }
 
 void Listener::update(tf::Vector3& origin,tf::Matrix3x3& orientation){
+
     try{
         tf_listener.lookupTransform(fixed_frame,target_frame, ros::Time(0), tf_transform);
         origin = tf_transform.getOrigin();
