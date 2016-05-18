@@ -7,6 +7,7 @@
 #include <tf/LinearMath/Transform.h>
 #include <geometry_msgs/Pose.h>
 #include <cmath>
+#include <eigen3/Eigen/Eigen>
 
 namespace opti_rviz {
 
@@ -93,6 +94,14 @@ public:
             v2(1) = v1.y();
             v2(2) = v1.z();
     }
+
+
+    static void tf2vec(const tf::Vector3& v1, Eigen::Vector3d& v2){
+        v2(0)  = v1[0];
+        v2(1)  = v1[1];
+        v2(2)  = v1[2];
+    }
+
 
     static void tf2vec4(const tf::Quaternion& q1, arma::colvec4& q2){
         q2(0) = q1.getX();

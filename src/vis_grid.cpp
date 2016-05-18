@@ -25,8 +25,6 @@ void Vis_gird::initialise(const std::string& frame_id, const arma::mat& points,i
         marker.points.resize(1);
         marker.header.frame_id          = frame_id;
         marker.type                     = marker_display_type;
-      // marker.action                   = visualization_msgs::Marker::ADD;
-        marker.color.a                  = 1.0f;
         marker.points[0].x      = points(i,0);
         marker.points[0].y      = points(i,1);
         marker.points[0].z      = points(i,2);
@@ -34,6 +32,7 @@ void Vis_gird::initialise(const std::string& frame_id, const arma::mat& points,i
         marker.color.r          = r;
         marker.color.g          = g;
         marker.color.b          = b;
+        marker.color.a          = 1.0f;
         marker.scale.x          = scale;
         marker.scale.y          = scale;
         marker.scale.z          = scale;
@@ -42,6 +41,7 @@ void Vis_gird::initialise(const std::string& frame_id, const arma::mat& points,i
         grid_msg.markers[i]     = marker;
     }
 }
+
 
 void Vis_gird::update(const arma::mat &points, const arma::colvec& weights){
     std::cout<< "Vis_grid::update" << std::endl;

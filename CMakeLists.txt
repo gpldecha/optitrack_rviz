@@ -5,11 +5,10 @@ project(optitrack_rviz)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp tf sensor_msgs
+  roscpp tf sensor_msgs cmake_modules
 )
 
-find_package(Armadillo)
-
+find_package(Armadillo REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -102,6 +101,7 @@ set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(HEADER_FILES ${INCLUDE_DIR}/optitrack_rviz/listener.h
+                 ${INCLUDE_DIR}/optitrack_rviz/publisher.h
                  ${INCLUDE_DIR}/optitrack_rviz/broadcaster.h
                  ${INCLUDE_DIR}/optitrack_rviz/filter.h
                  ${INCLUDE_DIR}/optitrack_rviz/type_conversion.h
@@ -112,6 +112,7 @@ set(HEADER_FILES ${INCLUDE_DIR}/optitrack_rviz/listener.h
 )
 
 set(SRC_FILES  ${SRC_DIR}/listener.cpp
+               ${SRC_DIR}/publisher.cpp
                ${SRC_DIR}/broadcaster.cpp
                ${SRC_DIR}/filter.cpp
                ${SRC_DIR}/input.cpp

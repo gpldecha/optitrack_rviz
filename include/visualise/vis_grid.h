@@ -16,6 +16,7 @@ namespace opti_rviz{
 
 class Vis_gird{
 
+
 public:
 
     Vis_gird(ros::NodeHandle& node, const std::string& topic_name);
