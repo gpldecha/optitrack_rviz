@@ -11,6 +11,8 @@
 #include <armadillo>
 #include <array>
 
+#include "visualise/vis_utils.h"
+
 
 namespace opti_rviz{
 
@@ -25,18 +27,35 @@ public:
 
     void update(const arma::mat &points, const arma::colvec& weights = arma::colvec());
 
+    void update(const arma::mat &points, const acolor &colors);
+
+    void update(const acolor & colors);
+
     void publish();
+
+private:
+
+    void update_2D(const arma::mat &points,const arma::colvec& weights);
+    void update_3D(const arma::mat &points,const arma::colvec& weights);
+    void update_2D(const arma::mat &points);
+    void update_3D(const arma::mat &points);
 
 public:
 
     float r, g, b;
     float scale;
+    double default_z;
+    double lifetime;
+
+
 
 private:
 
     ros::Publisher                      publisher;
     visualization_msgs::MarkerArray     grid_msg;
     int                                 marker_display_type;
+    bool                                bIs2D;
+
 
 
 };

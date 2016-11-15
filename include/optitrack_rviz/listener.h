@@ -27,7 +27,7 @@ public:
 
     void update_opti2rviz(tf::Vector3& origin,tf::Matrix3x3& orientation);
 
-    void update(tf::Vector3& origin,tf::Matrix3x3& orientation);
+    bool update(tf::Vector3& origin,tf::Matrix3x3& orientation);
 
     void update(tf::Vector3& origin,tf::Quaternion& orientation);
 
@@ -51,6 +51,8 @@ private:
     tf::Quaternion          q,q_tmp;
     tf::Vector3             origin_tmp;
     bool                    bFirst;
+    bool                    bReceivedMessage;
+
 
 };
 

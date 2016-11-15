@@ -19,6 +19,7 @@ Vis_points::Vis_points(ros::NodeHandle& node,const std::string& topic_name,int m
 
 void Vis_points::initialise_markers(const std::string& frame_id, const std::size_t num_points){
 
+    this->frame_id          = frame_id;
     point_m.points.resize(num_points);
     point_m.header.frame_id = frame_id;
     point_m.scale.x         = scale;
@@ -60,6 +61,19 @@ void Vis_points::initialise(const std::string& frame_id, const arma::fmat& point
     }
 }
 
+void Vis_points::initialise(const std::string& frame_id, const arma::mat& points){
+    assert(points.n_cols >= 2);
+
+    initialise_markers(frame_id,points.n_rows);
+
+    for(std::size_t i = 0; i < points.n_rows;i++){
+          point_m.points[i].x    = points(i,0);
+          point_m.points[i].y    = points(i,1);
+          point_m.points[i].z    = points(i,2);
+    }
+
+}
+
 
 void Vis_points::update(const std::vector<tf::Vector3>& points){
     point_m.header.stamp    = ros::Time::now();
@@ -68,6 +82,11 @@ void Vis_points::update(const std::vector<tf::Vector3>& points){
           point_m.points[i].y    = points[i].y();
           point_m.points[i].z    = points[i].z();
     }
+}
+
+void Vis_points::update_dynamic(const std::vector<tf::Vector3>& points){
+    initialise_markers(frame_id,points.size());
+    update(points);
 }
 
 void Vis_points::update(const arma::fmat& points,const colors& colors){

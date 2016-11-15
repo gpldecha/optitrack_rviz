@@ -25,9 +25,12 @@ public:
 
     void initialise(const std::string& frame_id, const std::vector<tf::Vector3>& points);
     void initialise(const std::string& frame_id, const arma::fmat& points);
+    void initialise(const std::string& frame_id, const arma::mat& points);
+
 
 
     void update(const std::vector<tf::Vector3>& points);
+    void update_dynamic(const std::vector<tf::Vector3>& points);
     void update(const arma::fmat &points, const colors& colors = colors(0));
 
     void publish();
@@ -49,7 +52,7 @@ private:
 
     ros::Publisher             point_pub;
     visualization_msgs::Marker point_m;
-
+    std::string                frame_id;
 
 };
 

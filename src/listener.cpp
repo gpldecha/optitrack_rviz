@@ -37,8 +37,8 @@ void Listener::update_opti2rviz(tf::Vector3& origin,tf::Matrix3x3& orientation){
     q_tmp       = q;
 }
 
-void Listener::update(tf::Vector3& origin,tf::Matrix3x3& orientation){
-
+bool Listener::update(tf::Vector3& origin,tf::Matrix3x3& orientation){
+    bReceivedMessage = true;
     try{
         tf_listener.lookupTransform(fixed_frame,target_frame, ros::Time(0), tf_transform);
         origin = tf_transform.getOrigin();
@@ -49,10 +49,13 @@ void Listener::update(tf::Vector3& origin,tf::Matrix3x3& orientation){
         ros::Duration(0.2).sleep();
         q      = q_tmp;
         origin = origin_tmp;
+        bReceivedMessage = false;
+
     }
 
     origin_tmp = origin;
     q_tmp       = q;
+    return bReceivedMessage;
 }
 
 void Listener::update(tf::Vector3& origin,tf::Quaternion& orientation){

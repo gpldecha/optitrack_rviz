@@ -127,6 +127,7 @@ set(VIS_HEADER_FILES ${INCLUDE_DIR}/visualise/vis_points.h
                      ${INCLUDE_DIR}/visualise/vis_grid.h
                      ${INCLUDE_DIR}/visualise/colormap.h
                      ${INCLUDE_DIR}/visualise/vis_point_cloud.h
+                     ${INCLUDE_DIR}/visualise/vis_utils.h
 
 )
 set(VIS_SRC_FILES  ${SRC_DIR}/vis_points.cpp
